@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CartApi</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body class="bg-secondary">
+    <div class="container text-center mt-5">
+        <h2>View Carts</h2>
+        <table class="table table-bordered table-dark table-striped mt-4">
+            <thead class="thead-light">
+                <tr>
+                    <th>Cart ID</th>
+                    <th>Title</th>
+                    <th>Price</th>
+                    <th>Total Products</th>
+                    <th>Total Quantity</th>
+                    <th>Total Price</th>
+                    <th>Discounted Total</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        fetch('https://dummyjson.com/carts')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let tbl = '';
+                data.carts.map(cart => {
+                    cart.products.map(product => {
+                        tbl += `
+                            <tr>
+                                <td>${cart.id}</td>
+                                <td>${product.title}</td>
+                                <td>${product.price}</td>
+                                <td>${product.quantity}</td>
+                                <td>${product.price}</td>
+                                <td>${product.total}</td>
+                                <td>${product.discountedTotal}</td>
+                                <td><img src="${product.thumbnail}" alt="Thumbnail" class="img-thumbnail" width="90"></td>
+                            </tr>
+                        `;
+                    });
+                });
+                document.getElementById('tbody').innerHTML = tbl;
+            });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
